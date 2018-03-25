@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Web;
 
 namespace Lab2_NetworkProtocols
 {
@@ -19,8 +20,7 @@ namespace Lab2_NetworkProtocols
             //Имена необходимых переменных окружения
             val1Name = "value1",
             val2Name = "value2",
-            operatName = "operator"
-            ;
+            operatName = "operator";
 
 
         public ForCGICalc(string outDocumentSource, string wrongDocumentSource)
@@ -63,7 +63,6 @@ namespace Lab2_NetworkProtocols
                 }
 
                 var result = CalcThis(val1, val2, operat);
-
                 return GetDocumentRight(outDocumentSource, val1Str, val2Str, operatString, result.ToString());
             }
             catch
@@ -93,7 +92,8 @@ namespace Lab2_NetworkProtocols
         {
             var varDictonary = new Dictionary<string, string>();
 
-            var inputString = Environment.GetEnvironmentVariable("QUERY_STRING");
+            var inputString = HttpUtility.UrlDecode(Environment.GetEnvironmentVariable("QUERY_STRING"));
+            
             var variables = inputString.Split('&');
 
             foreach (var a in variables)
