@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Web;
+using JSONParser;
 
 namespace Lab2_NetworkProtocols
 {
@@ -15,6 +16,9 @@ namespace Lab2_NetworkProtocols
         readonly string 
             outDocumentSource,
             wrongDocumentSource;
+
+        readonly JSONParser.JSONParser parser = new JSONParser.JSONParser();
+
         const string
             variableName = "QUERY_STRING",
             //Имена необходимых переменных окружения

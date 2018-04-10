@@ -50,5 +50,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JSONParser\JSONParser.csproj">
+      <Project>{76b87757-de4a-4fba-ab5d-ffe6cf691595}</Project>
+      <Name>JSONParser</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

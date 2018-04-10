@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2_NetworkProtocols", "Lab2_NetworkProtocols\Lab2_NetworkProtocols.csproj", "{68A260B4-A7E5-4A6F-840B-10EFDA1564E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4_NetworkProtocols", "Lab2_NetworkProtocols\Lab4_NetworkProtocols.csproj", "{68A260B4-A7E5-4A6F-840B-10EFDA1564E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONParser", "JSONParser\JSONParser.csproj", "{76B87757-DE4A-4FBA-AB5D-FFE6CF691595}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{68A260B4-A7E5-4A6F-840B-10EFDA1564E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68A260B4-A7E5-4A6F-840B-10EFDA1564E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68A260B4-A7E5-4A6F-840B-10EFDA1564E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B87757-DE4A-4FBA-AB5D-FFE6CF691595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B87757-DE4A-4FBA-AB5D-FFE6CF691595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B87757-DE4A-4FBA-AB5D-FFE6CF691595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B87757-DE4A-4FBA-AB5D-FFE6CF691595}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
