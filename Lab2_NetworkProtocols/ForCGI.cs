@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Web;
 using JSONParser;
-using System.IO;
 
 namespace Lab2_NetworkProtocols
 {
@@ -37,8 +36,8 @@ namespace Lab2_NetworkProtocols
             var parsedJson = parser.Parse(parsedJsonSource) as JSONObjectCollection;
 
             double
-                val1 = (double)parsedJson[val1Name].GetValue(),
-                val2 = (double)parsedJson[val2Name].GetValue();
+                val1 =  (Double)parsedJson[val1Name].GetValue(),
+                val2 = (Double)parsedJson[val2Name].GetValue();
 
             string operatStr = (string)parsedJson[operatName].GetValue();
             Operator operat;
@@ -92,8 +91,11 @@ namespace Lab2_NetworkProtocols
         {
             var varDictonary = new Dictionary<string, string>();
 
-            var inputString = Environment.GetEnvironmentVariable("QUERY_STRING");
-            
+            var inputString = HttpUtility.UrlDecode(Environment.GetEnvironmentVariable("QUERY_STRING"));
+
+            File.WriteAllText("D:/hui.txt",inputString);
+
+
             var variables = inputString.Split('&');
 
             foreach (var a in variables)
