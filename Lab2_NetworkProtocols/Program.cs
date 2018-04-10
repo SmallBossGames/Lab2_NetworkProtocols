@@ -13,16 +13,17 @@ namespace Lab2_NetworkProtocols
         static void Main(string[] args)
         {
             ForCGICalc calc = new ForCGICalc();
+            var value = calc.GetValue();
+            var doc = new StringBuilder();
 
-            Console.WriteLine(calc.GetValue());
+            doc.Append("Content-Type: application/json")
+                .AppendLine()
+                .AppendLine()
+                .Append(value);
 
-            Console.Read();
+            File.AppendAllText("D:/hui.txt", doc.ToString());
 
-            //Environment.SetEnvironmentVariable("QUERY_STRING", "value1=1&value2=6&operator=*");
-
-            var output = calc.GetValue();
-            Console.Write(calc.GetValue());
-
+            Console.Write(doc.ToString());
         }
     }
 }

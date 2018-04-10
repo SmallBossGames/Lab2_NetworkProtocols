@@ -21,6 +21,7 @@ namespace Lab2_NetworkProtocols
             val1Name = "value1",
             val2Name = "value2",
             operatName = "operator",
+            resultName = "result",
             jsonName = "jsonParam";
 
 
@@ -36,10 +37,10 @@ namespace Lab2_NetworkProtocols
             var parsedJson = parser.Parse(parsedJsonSource) as JSONObjectCollection;
 
             double
-                val1 =  (Double)parsedJson[val1Name].GetValue(),
-                val2 = (Double)parsedJson[val2Name].GetValue();
+                val1 =  ((JSONNumber)parsedJson[val1Name]).Value,
+                val2 = ((JSONNumber)parsedJson[val2Name]).Value;
 
-            string operatStr = (string)parsedJson[operatName].GetValue();
+            string operatStr = ((JSONString)parsedJson[operatName]).Value;
             Operator operat;
 
             switch (operatStr)
@@ -57,6 +58,7 @@ namespace Lab2_NetworkProtocols
                     operat = Operator.divide;
                     break;
                 default:
+
                     throw new FormatException();
             }
 
@@ -64,7 +66,7 @@ namespace Lab2_NetworkProtocols
 
             var resultJson = new JSONObjectCollection
                 {
-                    new JSONNumber(result)
+                    new JSONNumber(resultName, result)
                 };
 
             return resultJson.ToString();
@@ -93,8 +95,6 @@ namespace Lab2_NetworkProtocols
 
             var inputString = HttpUtility.UrlDecode(Environment.GetEnvironmentVariable("QUERY_STRING"));
 
-            File.WriteAllText("D:/hui.txt",inputString);
-
 
             var variables = inputString.Split('&');
 
@@ -107,30 +107,6 @@ namespace Lab2_NetworkProtocols
             return varDictonary;
         }
 
-
-        /// <summary>
-        /// Получить документ с результатом вычислений 
-        /// {0} - значение 1; {1} - оператор; {2} - значение 2; {3} - сумма
-        /// </summary>
-        /// <returns></returns>
-        string GetDocumentRight(string outSource, string val1, string operat, string val2,  string sum)
-        {
-            var htmlDoc = File.ReadAllText(outSource);
-            return string.Format(htmlDoc, val1, operat, val2, sum);
-        }
-
-        /// <summary>
-        /// Получить документ со сведениями об ошибке;
-        /// {0} - текст ошибки
-        /// </summary>
-        /// <param name="outSource">HTML документ</param>
-        /// <param name="exception">Текст ошибки</param>
-        /// <returns></returns>
-        string GetDocumentWrong(string outSource, string exception)
-        {
-            var htmlDoc = File.ReadAllText(outSource);
-            return string.Format(htmlDoc, exception);
-        }
 
     }
 }
