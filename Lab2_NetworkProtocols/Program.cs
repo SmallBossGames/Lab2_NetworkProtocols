@@ -12,11 +12,11 @@ namespace Lab2_NetworkProtocols
     {
         static void Main(string[] args)
         {
+            ForCGICalc calc = new ForCGICalc();
 
-            var pathOr = Directory.GetCurrentDirectory();
-            string pathRight = Path.Combine(pathOr, "templateRight.html");
-            string pathWrong = Path.Combine(pathOr, "templateWrong.html");
-            ForCGICalc calc = new ForCGICalc(pathRight, pathWrong);
+            Console.WriteLine(calc.GetValue());
+
+            Console.Read();
 
             //Environment.SetEnvironmentVariable("QUERY_STRING", "value1=1&value2=6&operator=*");
 

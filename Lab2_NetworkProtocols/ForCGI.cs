@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Web;
 using JSONParser;
+using System.IO;
 
 namespace Lab2_NetworkProtocols
 {
     class ForCGICalc
     {
         enum Operator { plus, minus, multiple, divide }
-
-        readonly string 
-            outDocumentSource,
-            wrongDocumentSource;
 
         readonly JSONParser.JSONParser parser = new JSONParser.JSONParser();
 
@@ -24,55 +21,54 @@ namespace Lab2_NetworkProtocols
             //Имена необходимых переменных окружения
             val1Name = "value1",
             val2Name = "value2",
-            operatName = "operator";
+            operatName = "operator",
+            jsonName = "jsonParam";
 
 
-        public ForCGICalc(string outDocumentSource, string wrongDocumentSource)
+        public ForCGICalc()
         {
-            this.outDocumentSource = outDocumentSource;
-            this.wrongDocumentSource = wrongDocumentSource;
 
         }
 
         public string GetValue()
         {
-            try
+            var parsedJsonSource = GetVariables()[jsonName];
+
+            var parsedJson = parser.Parse(parsedJsonSource) as JSONObjectCollection;
+
+            double
+                val1 = (double)parsedJson[val1Name].GetValue(),
+                val2 = (double)parsedJson[val2Name].GetValue();
+
+            string operatStr = (string)parsedJson[operatName].GetValue();
+            Operator operat;
+
+            switch (operatStr)
             {
-                var variables = GetVariables();
+                case "-":
+                    operat = Operator.minus;
+                    break;
+                case "+":
+                    operat = Operator.plus;
+                    break;
+                case "*":
+                    operat = Operator.multiple;
+                    break;
+                case "/":
+                    operat = Operator.divide;
+                    break;
+                default:
+                    throw new FormatException();
+            }
 
-                var val1Str = variables[val1Name];
-                var val2Str = variables[val2Name];
-                string operatString = variables[operatName];
+            var result = CalcThis(val1, val2, operat);
 
-                var val1 = Double.Parse(val1Str);
-                var val2 = Double.Parse(val2Str);
-
-                Operator operat;
-                switch (operatString)
+            var resultJson = new JSONObjectCollection
                 {
-                    case "-":
-                        operat = Operator.minus;
-                        break;
-                    case "+":
-                        operat = Operator.plus;
-                        break;
-                    case "*":
-                        operat = Operator.multiple;
-                        break;
-                    case "/":
-                        operat = Operator.divide;
-                        break;
-                    default:
-                        throw new Exception();
-                }
+                    new JSONNumber(result)
+                };
 
-                var result = CalcThis(val1, val2, operat);
-                return GetDocumentRight(outDocumentSource, val1Str, val2Str, operatString, result.ToString());
-            }
-            catch
-            {
-                return GetDocumentWrong(wrongDocumentSource, "Data is incorrect");
-            }
+            return resultJson.ToString();
         }
 
         double CalcThis(double val1, double val2, Operator operat)
@@ -96,7 +92,7 @@ namespace Lab2_NetworkProtocols
         {
             var varDictonary = new Dictionary<string, string>();
 
-            var inputString = HttpUtility.UrlDecode(Environment.GetEnvironmentVariable("QUERY_STRING"));
+            var inputString = Environment.GetEnvironmentVariable("QUERY_STRING");
             
             var variables = inputString.Split('&');
 
